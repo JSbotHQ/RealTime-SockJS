@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <title>SockJS + Express.js - group chat demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { border: 1px solid #c5bfbf; padding: 10px; width: 90%; margin-right: .5%; }
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+    </style>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+<script>
+    const sock = new SockJS('http://'+window.location.hostname+':9999/echo');
+
+
+   // Open the connection
+    sock.onopen = () => {
+        console.log('open',sock);
+    };
+
+    // On connection close
+    sock.onclose = () => {
+        console.log('close');
+    };
+
+    sock.onmessage = (msg) => {
+        console.log(msg)
+        let content = JSON.parse(msg.data);
+        $('#messages').append($('<li>').text(content));
+    };
+
+    sendMessage=() => {
+        let message = $('#m').val();
+        sock.send(JSON.stringify(message));
+        $('#m').val('');
+        return false;
+    }
+
+</script>
+
+<ul id="messages"></ul>
+<form>
+    <input id="m" autocomplete="off" /><button type="button" onclick="sendMessage()">Send</button>
+</form>
+</body>
+</html>

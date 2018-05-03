@@ -10,6 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
-    "sockjs": "^0.3.19"
+    "i": "^0.3.6",
+    "sockjs": "^0.3.19",
+    "sockjs-rooms": "^1.0.3",
+    "websocket-multiplex": "^0.1.0"
   }
 }
