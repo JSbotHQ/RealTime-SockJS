@@ -79,15 +79,62 @@ red.on('end', () => {
     console.log("SERVER: red channel was end!");
 });
 
+// Clients list
+const clients = {};
+
+// Broadcast to all clients
+const  broadcast = (message) => {
+    // iterate through each client in clients object
+    for (let client in clients){
+        // send the message to that client
+        clients[client].write(JSON.stringify(message));
+    }
+}
+
+// create sockjs server
+const echo = sockjs.createServer();
+
+let online = []
+// on new connection event
+echo.on('connection', (conn) => {
+
+    online.push(conn.id)
+
+    // add this client to clients object
+    clients[conn.id] = conn;
+    //conn.write(online)
+    const newMessage = (mes) => {
+        console.log(mes);
+        broadcast(JSON.parse(mes))
+    }
+
+    const Disconnect = ()=> {
+        // let index = online.indexOf(conn.id);
+        // if (index > -1) {
+        //     online.splice(index, 1);
+        // }
+        // console.log(`disconnected`,conn.id)
+        delete clients[conn.id];
+    }
+
+    // on receive new data from client event
+    conn.on('data', newMessage)
+
+    // on connection close event
+    conn.on('close',Disconnect)
+
+});
+
 service.installHandlers(server.listener, {
         prefix: '/multiplex'
     });
-
+// Integrate SockJS and listen on /echo
+echo.installHandlers(server.listener, {prefix:'/echo'});
 // ROUTES
 server.route({
     method: 'GET',
     path: '/chat',
-    handler: (request, h) => h.file('./public/client.html')
+    handler: (request, h) => h.file('./public/chat.html')
 });
 server.route({
     method: 'GET',

@@ -31,7 +31,7 @@
 
     sock.onmessage = (msg) => {
         console.log(msg)
-        let content = JSON.parse(msg.message);
+        let content = JSON.parse(msg.data);
         $('#messages').append($('<li>').text(content));
     };
 
@@ -45,9 +45,9 @@
 </script>
 
 <ul id="messages"></ul>
-<ul class="online" id="online"></ul>
+
 <form>
-    <input id="id" placeholder="socket id" autocomplete="off"/>
+
     <input id="m" autocomplete="off" /><button type="button" onclick="sendMessage()">Send</button>
 </form>
 </body>
