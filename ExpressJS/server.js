@@ -1,7 +1,7 @@
-var http = require('http');
-var sockjs = require('sockjs');
-const  express = require('express'),
-    app = express();
+const http = require('http');
+const sockjs = require('sockjs');
+const express = require('express'),
+          app = express();
 
 // Clients list
 const clients = {};
@@ -18,19 +18,27 @@ const  broadcast = (message) => {
 // create sockjs server
 const echo = sockjs.createServer();
 
+//let online = []
 // on new connection event
 echo.on('connection', (conn) => {
 
-console.log(conn.id)
-    const Disconnect = ()=> {
-        delete clients[conn.id];
-    }
+    online.push(conn.id)
 
     // add this client to clients object
     clients[conn.id] = conn;
+    //conn.write(online)
     const newMessage = (mes) => {
         console.log(mes);
-        broadcast(JSON.parse(mes));
+        broadcast({message:JSON.parse(mes)})
+}
+
+    const Disconnect = ()=> {
+        // let index = online.indexOf(conn.id);
+        // if (index > -1) {
+        //     online.splice(index, 1);
+        // }
+        // console.log(`disconnected`,conn.id)
+        delete clients[conn.id];
     }
 
     // on receive new data from client event

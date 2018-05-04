@@ -18,7 +18,7 @@
             margin: 5px;
         }
         .box div {
-            border-color: grey;
+            border-color: #800600;
             height: 300px;
             overflow: auto;
         }
@@ -29,12 +29,12 @@
             margin-left: 75px;
         }
         body {
-            background-color: #F0F0F0;
+            background-color: #71acf0;
             font-family: "Arial";
         }
     </style>
 </head><body lang="en">
-<h1>SockJS Multiplex example</h1>
+<h1>SockJS Group Chat Example</h1>
 
 <div id="first" class="box">
     <div></div>
@@ -78,12 +78,12 @@
     const sockjs_url = 'http://localhost:9999/multiplex';
     let sockjs = new SockJS(sockjs_url);
     let multiplexer = new WebSocketMultiplex(sockjs);
-    let ann  = multiplexer.channel('red');
-    let bob  = multiplexer.channel('bob');
-    let carl = multiplexer.channel('carl');
-    pipe(ann,  '#first');
-    pipe(bob,  '#second');
-    pipe(carl, '#third');
+    let friends  = multiplexer.channel('friends');
+    let Family  = multiplexer.channel('Family');
+    let colleague = multiplexer.channel('colleague');
+    pipe(friends,  '#first');
+    pipe(Family,  '#second');
+    pipe(colleague, '#third');
     $('#first input').focus();
 </script>
 </body></html>

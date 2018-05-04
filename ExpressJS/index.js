@@ -9,25 +9,25 @@ const sockjs_opts = {
 const service = sockjs.createServer(sockjs_opts);
 const server = new RoomServer(service);
 
-let red = server.registerChannel('red');
-red.on('connection', (conn) =>  {
-    conn.write('Red is connected');
+let friends = server.registerChannel('friends');
+friends.on('connection', (conn) =>  {
+    conn.write('friends is connected');
     conn.on('data', (data) => {
         conn.write(data);
     });
 });
 
-let bob = server.registerChannel('bob');
-bob.on('connection', (conn) => {
-    conn.write('bob is connected');
+let Family = server.registerChannel('Family');
+Family.on('connection', (conn) => {
+    conn.write('Family is connected');
     conn.on('data', (data) => {
         conn.write(data);
     });
 });
 
-let carl = server.registerChannel('carl');
-carl.on('connection', (conn) => {
-    conn.write('carl is connected');
+let colleague = server.registerChannel('colleague');
+colleague.on('connection', (conn) => {
+    conn.write('coulegue is connected');
     conn.on('data', (data) => {
         conn.write(data);
         console.log(`sdadsfs`,data)
@@ -57,14 +57,15 @@ red.on('end', () => {
 });
 
 let app = express();
-let server = http.createServer(app);+-
+let serv = http.createServer(app);+-
 
-service.installHandlers(server, {
+service.installHandlers(serv, {
     prefix: '/multiplex'
 });
 
 console.log(' [*] Listening on 0.0.0.0:9999');
-server.listen(9999, '0.0.0.0');
-app.get('/', (req, res) => {
-    res.sendfile(__dirname + '/public/group.html');
+serv.listen(9999, '0.0.0.0');
+// Route for chat
+app.get('/group', (req, res)=> {
+    res.sendFile('group.html', {root: './public'});
 });
