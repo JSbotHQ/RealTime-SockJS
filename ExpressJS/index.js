@@ -9,6 +9,9 @@ const sockjs_opts = {
 const service = sockjs.createServer(sockjs_opts);
 const server = new RoomServer(service);
 
+/**
+ * perticuler channel defined
+ */
 let friends = server.registerChannel('friends');
 friends.on('connection', (conn) =>  {
     conn.write('friends is connected');
@@ -49,15 +52,19 @@ latency.on('connection', (conn) => {
     });
 });
 
+/**
+ * close channel
+ */
 red.on('close',() => {
     console.log("SERVER: red channel was closed!");
 });
+
 red.on('end', () => {
     console.log("SERVER: red channel was end!");
 });
 
 let app = express();
-let serv = http.createServer(app);+-
+let serv = http.createServer(app);
 
 service.installHandlers(serv, {
     prefix: '/multiplex'
