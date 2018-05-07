@@ -75,7 +75,7 @@
             return false;
         });
     };
-    const sockjs_url = 'http://localhost:9999/multiplex';
+    const sockjs_url = 'http://localhost:3000/multiplex';
     let sockjs = new SockJS(sockjs_url);
     let multiplexer = new WebSocketMultiplex(sockjs);
     let friends  = multiplexer.channel('friends');
