@@ -6,7 +6,7 @@
   - start the server by `npm start`.
 
   i. client to all connected client messaging
-   - go to `http://localhost:3000/chat`.
+   - go to `http://localhost:4001/chat`.
 
    client code logic:
 
@@ -32,7 +32,7 @@
         conn.on('data', newMessage)
 
   ii. room messaging
-   - go to `http://localhost:3000/group`
+   - go to `http://localhost:4001/group`
 
    client code logic:
 
@@ -82,7 +82,7 @@
 #2. TrailsJS
 
    i. client to all connected client messaging
-    - go to `http://localhost:3000/chat`.
+    - go to `http://localhost:4001/chat`.
 
     client code logic:
 
@@ -108,7 +108,7 @@
           conn.on('data', newMessage)
 
    ii. room messaging
-    - go to `http://localhost:3000/group`
+    - go to `http://localhost:4001/group`
 
     client code logic:
 
@@ -160,7 +160,7 @@
   - start the server by `npm start`.
 
   i. client to all connected client messaging
-     - go to `http://localhost:3000/chat`.
+     - go to `http://localhost:4001/chat`.
 
      client code logic:
 
@@ -186,7 +186,7 @@
           conn.on('data', newMessage)
 
   ii. room messaging
-   - go to `http://localhost:3000/group`
+   - go to `http://localhost:4001/group`
 
     client code logic:
 
