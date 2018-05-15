@@ -122,8 +122,8 @@ service.installHandlers(serv, {
 // Integrate SockJS and listen on /echo
 echo.installHandlers(serv, {prefix:'/echo'});
 
-console.log('[*] Listening on 0.0.0.0:3000');
-serv.listen(3000, '0.0.0.0');
+console.log('[*] Listening on 0.0.0.0:4001');
+serv.listen(4001, '0.0.0.0');
 
 // Route for group chat
 app.get('/group', (req, res)=> {

@@ -17,7 +17,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
 <script>
-    const sock = new SockJS('http://'+window.location.hostname+':3000/echo');
+    const sock = new SockJS('http://'+window.location.hostname+':4001/echo');
 
    // Open the connection
     sock.onopen = () => {
