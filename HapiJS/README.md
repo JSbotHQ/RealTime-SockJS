@@ -1,6 +1,6 @@
 # RealTime-SockJS
 
-#3. TrailsJS
+#2. HapiJS
 
   i. client to all connected client messaging
    - go to `http://localhost:4001/chat`.
