@@ -1,11 +1,11 @@
 # RealTime-SockJS
 
-#3. TrailsJS
+### 3. TrailsJS
 
-  i. client to all connected client messaging
+  #### i. client to all connected client messaging
    - go to `http://localhost:4001/chat`.
 
-   client code logic:
+   ##### client code logic:
 
         sock.send(JSON.stringify(message));
 
@@ -13,16 +13,16 @@
              console.log(SON.parse(msg))
         };
 
-  server code logic:
+  ##### server code logic:
 
         conn.on('data', (msg) => {
             console.log(JSON.parse(msg));
         })
 
-  ii. room messaging
+  #### ii. room messaging
    - go to `http://localhost:4001/group`
 
-   client code logic:
+   ##### client code logic:
 
         print('[ ] sending', inp.val());
         ws.send(inp.val());
@@ -38,7 +38,7 @@
         ws.onmessage = (e) => {print('[.] message', e.data);};
         ws.onclose   = () => {print('[*] close');};
 
-   server code logic:
+   ##### server code logic:
 
       let friends = server.registerChannel('friends');
       friends.on('connection', (conn) =>  {

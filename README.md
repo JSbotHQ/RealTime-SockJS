@@ -1,16 +1,13 @@
 # RealTime-SockJS
 
-#1. ExpressJS
+#### 1. ExpressJS - [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/ExpressJS)
   - `cd ExpressJS`
-  - start the server by `npm start`.
-  - Go here for more Info: [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/ExpressJS)
+  - `npm start` start the server.
 
-#2. HapiJS
+#### 2. HapiJS - [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/HapiJS)
   - `cd HapiJS`
-  - start the server by `npm start`.
-  - Go here for more Info: [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/HapiJS)
+  - `npm start` start the server
 
-#3. TrailsJS
+#### 3. TrailsJS - [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/TrailsJS)
   - `cd TrailsJS`
-  - start the server by `npm start`.
-  - Go here for more Info: [README](https://github.com/JSbotHQ/RealTime-SockJS/tree/master/TrailsJS)
+  - `npm start` start the server
