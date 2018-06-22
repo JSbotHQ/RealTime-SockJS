@@ -1,56 +1,89 @@
 <!doctype html>
-<html>
-<head>
-    <title>SockJS + Express.js - group chat demo</title>
+<html><head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="https://d1fxtkz8shb9d2.cloudfront.net/websocket-multiplex-0.1.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font: 13px Helvetica, Arial; }
-        form { padding: 3px; position: fixed; bottom: 0; width: 100%; }
-        form input { border: 1px solid #c5bfbf; padding: 10px; width: 90%; margin-right: .5%; }
-        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages li { padding: 5px 10px; }
-        #messages li:nth-child(odd) { background: #eee; }
+        .box {
+            width: 300px;
+            float: left;
+            margin: 0 20px 0 20px;
+        }
+        .box div, .box input {
+            border: 1px solid;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            width: 100%;
+            padding: 0px;
+            margin: 5px;
+        }
+        .box div {
+            border-color: #800600;
+            height: 300px;
+            overflow: auto;
+        }
+        .box input {
+            height: 30px;
+        }
+        h1 {
+            margin-left: 75px;
+        }
+        body {
+            background-color: #71acf0;
+            font-family: "Arial";
+        }
     </style>
-</head>
-<body>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js"></script>
+</head><body lang="en">
+<h1>SockJS Group Chat Example</h1>
+
+<div id="first" class="box">
+    <div></div>
+    <form><input autocomplete="off" value="Type here..."></input></form>
+</div>
+
+<div id="second" class="box">
+    <div></div>
+    <form><input autocomplete="off"></input></form>
+</div>
+
+<div id="third" class="box">
+    <div></div>
+    <form><input autocomplete="off"></input></form>
+</div>
+
 <script>
-    const sock = new SockJS('http://'+window.location.hostname+':4001/echo');
-
-    // Open the connection
-    sock.onopen = () => {
-        console.log('open');
+    // Pipe - convenience wrapper to present data received from an
+    // object supporting WebSocket API in an html element. And the other
+    // direction: data typed into an input box shall be sent back.
+    let pipe = (ws, el_name) => {
+        let div  = $(el_name + ' div');
+        let inp  = $(el_name + ' input');
+        let form = $(el_name + ' form');
+        let print = (m, p) => {
+            p = (p === undefined) ? '' : JSON.stringify(p);
+            div.append($("<code>").text(m + ' ' + p));
+            div.append($("<br>"));
+            div.scrollTop(div.scrollTop() + 10000);
+        };
+        ws.onopen    = () => {print('[*] open', ws.protocol);};
+        ws.onmessage = (e) => {print('[.] message', e.data);};
+        ws.onclose   = () => {print('[*] close');};
+        form.submit( () => {
+            print('[ ] sending', inp.val());
+            ws.send(inp.val());
+            inp.val('');
+            return false;
+        });
     };
-
-    // On connection close
-    sock.onclose = () => {
-        console.log('close');
-    };
-
-    sock.onmessage = (msg) => {
-        console.log(msg)
-        let content = JSON.parse(msg.data);
-        console.log(content)
-        $('#messages').append($('<li>').text(content.username + ':' +content.message));
-    };
-
-    let username = prompt('enter user name')
-
-    sendMessage=() => {
-        let message = $('#m').val();
-        let send_data= {username:username, message:message}
-        sock.send(JSON.stringify(send_data));
-        $('#m').val('');
-        return false;
-    }
-
+    const sockjs_url = 'http://localhost:4001/multiplex';
+    let sockjs = new SockJS(sockjs_url);
+    let multiplexer = new WebSocketMultiplex(sockjs);
+    let friends  = multiplexer.channel('friends');
+    let Family  = multiplexer.channel('Family');
+    let colleague = multiplexer.channel('colleague');
+    pipe(friends,  '#first');
+    pipe(Family,  '#second');
+    pipe(colleague, '#third');
+    $('#first input').focus();
 </script>
-
-<ul id="messages"></ul>
-<form>
-    <input id="m" autocomplete="off" /><button type="button" onclick="sendMessage()">Send</button>
-</form>
-</body>
-</html>
+</body></html>
