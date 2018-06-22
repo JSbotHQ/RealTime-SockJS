@@ -91,7 +91,6 @@ echo.on('connection', (conn) => {
     clients[conn.id] = conn;
     //conn.write(online)
     const newMessage = (mes) => {
-        console.log(mes);
         broadcast(JSON.parse(mes))
     }
 

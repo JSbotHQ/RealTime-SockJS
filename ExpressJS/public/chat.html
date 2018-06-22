@@ -32,12 +32,16 @@
     sock.onmessage = (msg) => {
         console.log(msg)
         let content = JSON.parse(msg.data);
-        $('#messages').append($('<li>').text(content));
+        console.log(content)
+        $('#messages').append($('<li>').text(content.username + ':' +content.message));
     };
+
+    let username = prompt('enter user name')
 
     sendMessage=() => {
         let message = $('#m').val();
-        sock.send(JSON.stringify(message));
+        let send_data= {username:username, message:message}
+        sock.send(JSON.stringify(send_data));
         $('#m').val('');
         return false;
     }
